@@ -7,7 +7,7 @@ function Ball:init(x,y,r)
     ball.friction = 0
     ball.linearDamping = 0
     ball.angularDamping = 0
-    ball.restitution = 0.5
+    ball.restitution = 1
     ball.info = self
     ball.type = DYNAMIC
     self.r = r
@@ -16,12 +16,25 @@ function Ball:init(x,y,r)
 end
 
 function Ball:Kick()
-    self.body.linearVelocity = vec2(1000,0):rotate(math.random(45,135)/180*math.pi)    
+    self.body.linearVelocity = vec2(200,0):rotate(math.random(45,135)/180*math.pi)    
 end
 
-function Ball:draw()    
+function Ball:update()
+    if false and math.abs(self.body.linearVelocity.y)<200 then
+        print(self.body.linearVelocity)        
+        self.body.linearVelocity = self.body.linearVelocity * 1.1 + vec2(0,1)
+        print(self.body.linearVelocity)        
+    end
+    if self.body.linearVelocity:dist(vec2(0,0)) < 400 then
+        print("acc")
+        self.body.linearVelocity = self.body.linearVelocity * 1.2
+    end
+end
+
+function Ball:draw()  
+    self:update()  
     pushStyle()
-    fill(13, 13, 13, 255)
+    fill(171, 165, 54, 255)
     ellipse(self.body.x,self.body.y,2*self.r)
     popStyle()
 end

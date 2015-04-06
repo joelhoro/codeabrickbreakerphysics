@@ -27,6 +27,8 @@ function setupBricks()
 end
 
 function setup()
+    log = Log("Brickbreaker",true)
+    log:print("Setting gravity to zero")
     physics.gravity(0,0)
     ball = Ball(500,200,20)
     ball:Kick()
@@ -41,6 +43,7 @@ end
 
 function collide(contact)
     bodies = {contact.bodyA,contact.bodyB}
+--    log:print("Collision between "..contact.bodyA.info.type.." and "..contact.bodyB.info.type)
     for i,b in ipairs(bodies) do
         if b.info.type == "brick" then b.info:destroy() end
         if b.info.type == "wall" then sound(SOUND_BLIT, 10702) end
